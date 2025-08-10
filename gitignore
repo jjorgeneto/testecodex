@@ -1,0 +1,22 @@
+# Build
+bin/
+obj/
+
+# User-specific
+*.user
+*.suo
+*.userprefs
+
+# Rider / VSCode
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# EF Core
+migrations/*.Designer.cs
