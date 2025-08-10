@@ -1,18 +1,18 @@
-using System.Text;
 using Application.Interfaces;
 using Application.Services;
 using Domain.Interfaces;
-using Infrastructure.Data;
 using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurações
-var config = builder.Configuration;
-var services = builder.Services;
+// Registrando serviços simples
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<IClienteService, ClienteService>();
 
-// EF Core + Npgsql
-var connStr = config.GetConnectionString(
+builder.Services.AddControllers();
+
+var app = builder.Build();
+
+app.MapControllers();
+
+app.Run();
