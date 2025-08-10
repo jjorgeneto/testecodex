@@ -1,18 +1,25 @@
-using System.Text;
-using Application.Interfaces;
-using Application.Services;
-using Domain.Interfaces;
-using Infrastructure.Data;
-using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurações
-var config = builder.Configuration;
-var services = builder.Services;
+builder.Services.AddControllers();
 
-// EF Core + Npgsql
-var connStr = config.GetConnectionString(
+builder.Services.AddAuthentication("Test")
+    .AddScheme<AuthenticationSchemeOptions, Api.TestAuthHandler>("Test", options => { });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(Api.AuthConstants.AdminPolicy,
+        policy => policy.RequireRole("Admin"));
+});
+
+var app = builder.Build();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+public partial class Program { }
