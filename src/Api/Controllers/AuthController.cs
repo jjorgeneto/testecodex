@@ -13,3 +13,4 @@ public class AuthController : ControllerBase
         return Ok(new { token = $"dummy-token-for-{username}" });
     }
 }
+
